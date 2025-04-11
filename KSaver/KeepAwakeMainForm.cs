@@ -336,8 +336,8 @@ namespace KSaver
                     }
                 }
                 SetForegroundWindow(previous);
-                FlashTrayIcon();
             }
+            FlashTrayIcon();
         }
 
         /// <summary>
