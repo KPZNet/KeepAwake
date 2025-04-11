@@ -417,7 +417,7 @@ namespace KSaver
             {
                 NotifyIcon trayIcon = KTrayNotifier; // Assuming KTrayNotifier is a NotifyIcon
                 Icon originalIcon = trayIcon.Icon;
-                Icon invertedIcon = InvertIconColors(originalIcon);
+                Icon invertedIcon = SetIconToBlack(originalIcon);
                 for (int i = 0; i < 2; i++)
                 {
                     trayIcon.Icon = invertedIcon;
@@ -445,6 +445,22 @@ namespace KSaver
             }
 
             return Icon.FromHandle(invertedBitmap.GetHicon());
+        }
+
+        /// <summary>
+        /// Sets the icon to a completely black color.
+        /// </summary>
+        private Icon SetIconToBlack(Icon originalIcon)
+        {
+            Bitmap originalBitmap = originalIcon.ToBitmap();
+            Bitmap blackBitmap = new Bitmap(originalBitmap.Width, originalBitmap.Height);
+
+            using (Graphics g = Graphics.FromImage(blackBitmap))
+            {
+                g.Clear(Color.Black);
+            }
+
+            return Icon.FromHandle(blackBitmap.GetHicon());
         }
 
     }
