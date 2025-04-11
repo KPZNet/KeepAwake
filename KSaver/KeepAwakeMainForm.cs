@@ -10,6 +10,7 @@ using System.Threading;
 using System.Runtime.InteropServices;
 using Microsoft.Win32;
 using System.IO;
+using System.Threading.Tasks;
 
 
 namespace KSaver
@@ -297,18 +298,6 @@ namespace KSaver
 
             return bRet;
         }
-        //KPC, fill in later
-        void ShowFireResults(bool bGood)
-        {
-            if (bGood)
-            {
-                
-            }
-            else
-            {
-
-            }
-        }
 
         /// <summary>
         /// Fire
@@ -347,7 +336,7 @@ namespace KSaver
                     }
                 }
                 SetForegroundWindow(previous);
-                //ShowFireResults(SuccessfullNudge);
+                FlashTrayIcon();
             }
         }
 
@@ -419,7 +408,43 @@ namespace KSaver
 
         private void KTrayNotifier_MouseDoubleClick(object sender, MouseEventArgs e)
         {
+            FlashTrayIcon();
+        }
 
+        private void FlashTrayIcon()
+        {
+            Task.Run(() =>
+            {
+                NotifyIcon trayIcon = KTrayNotifier; // Assuming KTrayNotifier is a NotifyIcon
+                Icon originalIcon = trayIcon.Icon;
+                Icon invertedIcon = InvertIconColors(originalIcon);
+                for (int i = 0; i < 2; i++)
+                {
+                    trayIcon.Icon = invertedIcon;
+                    Thread.Sleep(100);
+                    trayIcon.Icon = originalIcon;
+                    Thread.Sleep(100);
+                }
+            });
+        }
+        /// <summary>
+
+        private Icon InvertIconColors(Icon originalIcon)
+        {
+            Bitmap originalBitmap = originalIcon.ToBitmap();
+            Bitmap invertedBitmap = new Bitmap(originalBitmap.Width, originalBitmap.Height);
+
+            for (int x = 0; x < originalBitmap.Width; x++)
+            {
+                for (int y = 0; y < originalBitmap.Height; y++)
+                {
+                    Color originalColor = originalBitmap.GetPixel(x, y);
+                    Color invertedColor = Color.FromArgb(originalColor.A, 255 - originalColor.R, 255 - originalColor.G, 255 - originalColor.B);
+                    invertedBitmap.SetPixel(x, y, invertedColor);
+                }
+            }
+
+            return Icon.FromHandle(invertedBitmap.GetHicon());
         }
 
     }
