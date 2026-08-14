@@ -42,10 +42,6 @@ namespace KSaver
         /// <summary>
         /// DLL Imports
         /// </summary>
-        [DllImport("User32.dll")]
-        private static extern int SetForegroundWindow(IntPtr hWnd);
-        [DllImport("User32.dll")]
-        private static extern IntPtr GetForegroundWindow();
         [DllImport("user32.dll", EntryPoint = "keybd_event", CharSet = CharSet.Auto, ExactSpelling = true)]
         private static extern void keybd_event(byte vk, byte scan, int flags, int extrainfo);
 
@@ -57,6 +53,7 @@ namespace KSaver
         public const byte VK_NUMLOCK = 0x90;
         public const byte VK_SCROLL = 0x91;
         public const byte VK_CAPITAL = 0x14;
+        public const byte VK_F24 = 0x87;
         public const byte KEYEVENTF_EXTENDEDKEY = 0x1;
         public const byte KEYEVENTF_KEYUP = 0x2;
         public const byte VER_PLATFORM_WIN32_NT = 2;
@@ -208,7 +205,7 @@ namespace KSaver
                 schedule.UseScheduleOne = (ushort)(int)KSaverKey.GetValue("UseScheduleOne", (int)defaultUseSchedule);
                 schedule.UseScheduleTwo = (ushort)(int)KSaverKey.GetValue("UseScheduleTwo", (int)defaultUseSchedule);
                 schedule.UseScheduleThree = (ushort)(int)KSaverKey.GetValue("UseScheduleThree", (int)defaultUseSchedule);
-                schedule.UseScheduleFour = (ushort)(int)KSaverKey.GetValue("UseSchedulefour", (int)defaultUseSchedule);
+                schedule.UseScheduleFour = (ushort)(int)KSaverKey.GetValue("UseScheduleFour", (int)defaultUseSchedule);
 
                 tempString = (string)KSaverKey.GetValue("ScheduleOneFrom", (string)defaultTimeStringFrom);
                 schedule.ScheduleOneFrom = DateTime.Parse(tempString);
@@ -304,8 +301,6 @@ namespace KSaver
         /// </summary>
         void Fire(byte vkey, byte scancode)
         {
-            int TOTAL_ACTIVE_WINDOW_TRIES = 3;
-
             bool bFire = false;
             if (AppUseSchedule == 1)
             {
@@ -321,21 +316,8 @@ namespace KSaver
 
             if (bFire)
             {
-                IntPtr previous = GetForegroundWindow();
-                for (int iTries = 0; iTries < TOTAL_ACTIVE_WINDOW_TRIES; iTries++ )
-                {
-                    if (GetForegroundWindow() != this.Handle)
-                    {
-                        SetForegroundWindow(this.Handle);
-                    }
-                    if (GetForegroundWindow() == this.Handle)
-                    {
-                        keybd_event(vkey, scancode, KEYEVENTF_EXTENDEDKEY | 0, 0);
-                        keybd_event(vkey, scancode, KEYEVENTF_EXTENDEDKEY | KEYEVENTF_KEYUP, 0);
-                        break;
-                    }
-                }
-                SetForegroundWindow(previous);
+                keybd_event(vkey, scancode, KEYEVENTF_EXTENDEDKEY | 0, 0);
+                keybd_event(vkey, scancode, KEYEVENTF_EXTENDEDKEY | KEYEVENTF_KEYUP, 0);
             }
             FlashTrayIcon();
         }
@@ -345,8 +327,7 @@ namespace KSaver
         /// </summary>
         private void KeyStrokeTimer_Tick(object sender, EventArgs e)
         {
-            //Fires a "K" keyboard stroke
-            Fire(0x4B, 0x25);   
+            Fire(VK_F24, 0);
         }
 
         /// <summary>
