@@ -376,8 +376,10 @@ namespace KSaver
             {
                 keybd_event(vkey, scancode, KEYEVENTF_EXTENDEDKEY | 0, 0);
                 keybd_event(vkey, scancode, KEYEVENTF_EXTENDEDKEY | KEYEVENTF_KEYUP, 0);
+
+                FlashTrayIcon();
             }
-            FlashTrayIcon();
+            
         }
 
         /// <summary>
