@@ -32,6 +32,13 @@ namespace KSaver
         public DateTime ScheduleThreeTo;
         public DateTime ScheduleFourFrom;
         public DateTime ScheduleFourTo;
+        public ushort ActiveSunday;
+        public ushort ActiveMonday;
+        public ushort ActiveTuesday;
+        public ushort ActiveWednesday;
+        public ushort ActiveThursday;
+        public ushort ActiveFriday;
+        public ushort ActiveSaturday;
     }
 
     /// <summary>
@@ -159,6 +166,14 @@ namespace KSaver
             KSaverKey.SetValue("ScheduleFourFrom", schedules.ScheduleFourFrom.ToString(), RegistryValueKind.String);
             KSaverKey.SetValue("ScheduleFourTo", schedules.ScheduleFourTo.ToString(), RegistryValueKind.String);
 
+            KSaverKey.SetValue("ActiveSunday", schedules.ActiveSunday, RegistryValueKind.DWord);
+            KSaverKey.SetValue("ActiveMonday", schedules.ActiveMonday, RegistryValueKind.DWord);
+            KSaverKey.SetValue("ActiveTuesday", schedules.ActiveTuesday, RegistryValueKind.DWord);
+            KSaverKey.SetValue("ActiveWednesday", schedules.ActiveWednesday, RegistryValueKind.DWord);
+            KSaverKey.SetValue("ActiveThursday", schedules.ActiveThursday, RegistryValueKind.DWord);
+            KSaverKey.SetValue("ActiveFriday", schedules.ActiveFriday, RegistryValueKind.DWord);
+            KSaverKey.SetValue("ActiveSaturday", schedules.ActiveSaturday, RegistryValueKind.DWord);
+
             KSaverKey.Close();
         }
 
@@ -172,6 +187,7 @@ namespace KSaver
             ushort defaultPauseAfterOn = 1;
             ushort defaultAppEnabled = 1;
             ushort defaultUseSchedule = 0;
+            ushort defaultDayActive = 1;
             string defaultTimeStringFrom = "8:00:00 AM";
             string defaultTimeStringTo   = "9:00:00 AM";
             string tempString;
@@ -190,6 +206,14 @@ namespace KSaver
             schedule.ScheduleThreeTo = DateTime.Parse(defaultTimeStringTo);
             schedule.ScheduleFourFrom = DateTime.Parse(defaultTimeStringFrom);
             schedule.ScheduleFourTo = DateTime.Parse(defaultTimeStringTo);
+
+            schedule.ActiveSunday = defaultDayActive;
+            schedule.ActiveMonday = defaultDayActive;
+            schedule.ActiveTuesday = defaultDayActive;
+            schedule.ActiveWednesday = defaultDayActive;
+            schedule.ActiveThursday = defaultDayActive;
+            schedule.ActiveFriday = defaultDayActive;
+            schedule.ActiveSaturday = defaultDayActive;
 
             Microsoft.Win32.RegistryKey KSaverKey;
             KSaverKey = Microsoft.Win32.Registry.CurrentUser.OpenSubKey("KeepAwake");
@@ -230,6 +254,14 @@ namespace KSaver
 
                 tempString = (string)KSaverKey.GetValue("ScheduleFourTo", (string)defaultTimeStringTo);
                 schedule.ScheduleFourTo = DateTime.Parse(tempString);
+
+                schedule.ActiveSunday = (ushort)(int)KSaverKey.GetValue("ActiveSunday", (int)defaultDayActive);
+                schedule.ActiveMonday = (ushort)(int)KSaverKey.GetValue("ActiveMonday", (int)defaultDayActive);
+                schedule.ActiveTuesday = (ushort)(int)KSaverKey.GetValue("ActiveTuesday", (int)defaultDayActive);
+                schedule.ActiveWednesday = (ushort)(int)KSaverKey.GetValue("ActiveWednesday", (int)defaultDayActive);
+                schedule.ActiveThursday = (ushort)(int)KSaverKey.GetValue("ActiveThursday", (int)defaultDayActive);
+                schedule.ActiveFriday = (ushort)(int)KSaverKey.GetValue("ActiveFriday", (int)defaultDayActive);
+                schedule.ActiveSaturday = (ushort)(int)KSaverKey.GetValue("ActiveSaturday", (int)defaultDayActive);
 
                 KSaverKey.Close();
             }
@@ -297,6 +329,32 @@ namespace KSaver
         }
 
         /// <summary>
+        /// IsDayActive
+        /// </summary>
+        bool IsDayActive()
+        {
+            switch (DateTime.Now.DayOfWeek)
+            {
+                case DayOfWeek.Sunday:
+                    return AppSchedule.ActiveSunday == 1;
+                case DayOfWeek.Monday:
+                    return AppSchedule.ActiveMonday == 1;
+                case DayOfWeek.Tuesday:
+                    return AppSchedule.ActiveTuesday == 1;
+                case DayOfWeek.Wednesday:
+                    return AppSchedule.ActiveWednesday == 1;
+                case DayOfWeek.Thursday:
+                    return AppSchedule.ActiveThursday == 1;
+                case DayOfWeek.Friday:
+                    return AppSchedule.ActiveFriday == 1;
+                case DayOfWeek.Saturday:
+                    return AppSchedule.ActiveSaturday == 1;
+                default:
+                    return true;
+            }
+        }
+
+        /// <summary>
         /// Fire
         /// </summary>
         void Fire(byte vkey, byte scancode)
@@ -304,7 +362,7 @@ namespace KSaver
             bool bFire = false;
             if (AppUseSchedule == 1)
             {
-                if (InSchedule())
+                if (IsDayActive() && InSchedule())
                 {
                     bFire = true;
                 }

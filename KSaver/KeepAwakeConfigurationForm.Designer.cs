@@ -57,6 +57,14 @@
             this.ScheduleOneFrom = new System.Windows.Forms.DateTimePicker();
             this.UseSchedule = new System.Windows.Forms.CheckBox();
             this.ApplyConfig = new System.Windows.Forms.Button();
+            this.labelActiveDays = new System.Windows.Forms.Label();
+            this.DayActiveSunday = new System.Windows.Forms.CheckBox();
+            this.DayActiveMonday = new System.Windows.Forms.CheckBox();
+            this.DayActiveTuesday = new System.Windows.Forms.CheckBox();
+            this.DayActiveWednesday = new System.Windows.Forms.CheckBox();
+            this.DayActiveThursday = new System.Windows.Forms.CheckBox();
+            this.DayActiveFriday = new System.Windows.Forms.CheckBox();
+            this.DayActiveSaturday = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.MinutesToFire)).BeginInit();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.HoursToClose)).BeginInit();
@@ -203,11 +211,19 @@
             this.groupBox2.Controls.Add(this.ScheduleOneTo);
             this.groupBox2.Controls.Add(this.ScheduleOneFrom);
             this.groupBox2.Controls.Add(this.UseSchedule);
+            this.groupBox2.Controls.Add(this.labelActiveDays);
+            this.groupBox2.Controls.Add(this.DayActiveSunday);
+            this.groupBox2.Controls.Add(this.DayActiveMonday);
+            this.groupBox2.Controls.Add(this.DayActiveTuesday);
+            this.groupBox2.Controls.Add(this.DayActiveWednesday);
+            this.groupBox2.Controls.Add(this.DayActiveThursday);
+            this.groupBox2.Controls.Add(this.DayActiveFriday);
+            this.groupBox2.Controls.Add(this.DayActiveSaturday);
             this.groupBox2.Location = new System.Drawing.Point(18, 206);
             this.groupBox2.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.groupBox2.Size = new System.Drawing.Size(597, 265);
+            this.groupBox2.Size = new System.Drawing.Size(597, 305);
             this.groupBox2.TabIndex = 10;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "KeepAwake Schedule";
@@ -386,13 +402,100 @@
             this.ApplyConfig.UseVisualStyleBackColor = true;
             this.ApplyConfig.Click += new System.EventHandler(this.ApplyConfig_Click);
             // 
+            // labelActiveDays
+            // 
+            this.labelActiveDays.AutoSize = true;
+            this.labelActiveDays.Location = new System.Drawing.Point(17, 278);
+            this.labelActiveDays.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.labelActiveDays.Name = "labelActiveDays";
+            this.labelActiveDays.Size = new System.Drawing.Size(83, 20);
+            this.labelActiveDays.TabIndex = 27;
+            this.labelActiveDays.Text = "Active Days";
+            // 
+            // DayActiveSunday
+            // 
+            this.DayActiveSunday.AutoSize = true;
+            this.DayActiveSunday.Location = new System.Drawing.Point(110, 276);
+            this.DayActiveSunday.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.DayActiveSunday.Name = "DayActiveSunday";
+            this.DayActiveSunday.Size = new System.Drawing.Size(58, 24);
+            this.DayActiveSunday.TabIndex = 28;
+            this.DayActiveSunday.Text = "Sun";
+            this.DayActiveSunday.UseVisualStyleBackColor = true;
+            // 
+            // DayActiveMonday
+            // 
+            this.DayActiveMonday.AutoSize = true;
+            this.DayActiveMonday.Location = new System.Drawing.Point(178, 276);
+            this.DayActiveMonday.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.DayActiveMonday.Name = "DayActiveMonday";
+            this.DayActiveMonday.Size = new System.Drawing.Size(58, 24);
+            this.DayActiveMonday.TabIndex = 29;
+            this.DayActiveMonday.Text = "Mon";
+            this.DayActiveMonday.UseVisualStyleBackColor = true;
+            // 
+            // DayActiveTuesday
+            // 
+            this.DayActiveTuesday.AutoSize = true;
+            this.DayActiveTuesday.Location = new System.Drawing.Point(246, 276);
+            this.DayActiveTuesday.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.DayActiveTuesday.Name = "DayActiveTuesday";
+            this.DayActiveTuesday.Size = new System.Drawing.Size(58, 24);
+            this.DayActiveTuesday.TabIndex = 30;
+            this.DayActiveTuesday.Text = "Tue";
+            this.DayActiveTuesday.UseVisualStyleBackColor = true;
+            // 
+            // DayActiveWednesday
+            // 
+            this.DayActiveWednesday.AutoSize = true;
+            this.DayActiveWednesday.Location = new System.Drawing.Point(314, 276);
+            this.DayActiveWednesday.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.DayActiveWednesday.Name = "DayActiveWednesday";
+            this.DayActiveWednesday.Size = new System.Drawing.Size(58, 24);
+            this.DayActiveWednesday.TabIndex = 31;
+            this.DayActiveWednesday.Text = "Wed";
+            this.DayActiveWednesday.UseVisualStyleBackColor = true;
+            // 
+            // DayActiveThursday
+            // 
+            this.DayActiveThursday.AutoSize = true;
+            this.DayActiveThursday.Location = new System.Drawing.Point(382, 276);
+            this.DayActiveThursday.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.DayActiveThursday.Name = "DayActiveThursday";
+            this.DayActiveThursday.Size = new System.Drawing.Size(58, 24);
+            this.DayActiveThursday.TabIndex = 32;
+            this.DayActiveThursday.Text = "Thu";
+            this.DayActiveThursday.UseVisualStyleBackColor = true;
+            // 
+            // DayActiveFriday
+            // 
+            this.DayActiveFriday.AutoSize = true;
+            this.DayActiveFriday.Location = new System.Drawing.Point(450, 276);
+            this.DayActiveFriday.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.DayActiveFriday.Name = "DayActiveFriday";
+            this.DayActiveFriday.Size = new System.Drawing.Size(58, 24);
+            this.DayActiveFriday.TabIndex = 33;
+            this.DayActiveFriday.Text = "Fri";
+            this.DayActiveFriday.UseVisualStyleBackColor = true;
+            // 
+            // DayActiveSaturday
+            // 
+            this.DayActiveSaturday.AutoSize = true;
+            this.DayActiveSaturday.Location = new System.Drawing.Point(518, 276);
+            this.DayActiveSaturday.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.DayActiveSaturday.Name = "DayActiveSaturday";
+            this.DayActiveSaturday.Size = new System.Drawing.Size(58, 24);
+            this.DayActiveSaturday.TabIndex = 34;
+            this.DayActiveSaturday.Text = "Sat";
+            this.DayActiveSaturday.UseVisualStyleBackColor = true;
+            // 
             // KeepAwakeConfigurationForm
             // 
             this.AcceptButton = this.OKConfig;
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.Color.White;
             this.CancelButton = this.CancelConfig;
-            this.ClientSize = new System.Drawing.Size(634, 516);
+            this.ClientSize = new System.Drawing.Size(634, 556);
             this.ControlBox = false;
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.ApplyConfig);
@@ -448,5 +551,13 @@
         private System.Windows.Forms.Button ApplyConfig;
         private System.Windows.Forms.CheckBox AppIsEnabled;
         private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.Label labelActiveDays;
+        private System.Windows.Forms.CheckBox DayActiveSunday;
+        private System.Windows.Forms.CheckBox DayActiveMonday;
+        private System.Windows.Forms.CheckBox DayActiveTuesday;
+        private System.Windows.Forms.CheckBox DayActiveWednesday;
+        private System.Windows.Forms.CheckBox DayActiveThursday;
+        private System.Windows.Forms.CheckBox DayActiveFriday;
+        private System.Windows.Forms.CheckBox DayActiveSaturday;
     }
 }

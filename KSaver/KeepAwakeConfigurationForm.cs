@@ -75,6 +75,14 @@ namespace KSaver
             ScheduleThreeFrom.Value = cfgSchedule.ScheduleThreeFrom;
             ScheduleFourTo.Value = cfgSchedule.ScheduleFourTo;
             ScheduleFourFrom.Value = cfgSchedule.ScheduleFourFrom;
+
+            DayActiveSunday.Checked = cfgSchedule.ActiveSunday == 1 ? true : false;
+            DayActiveMonday.Checked = cfgSchedule.ActiveMonday == 1 ? true : false;
+            DayActiveTuesday.Checked = cfgSchedule.ActiveTuesday == 1 ? true : false;
+            DayActiveWednesday.Checked = cfgSchedule.ActiveWednesday == 1 ? true : false;
+            DayActiveThursday.Checked = cfgSchedule.ActiveThursday == 1 ? true : false;
+            DayActiveFriday.Checked = cfgSchedule.ActiveFriday == 1 ? true : false;
+            DayActiveSaturday.Checked = cfgSchedule.ActiveSaturday == 1 ? true : false;
         }
 
         /// <summary>
@@ -119,6 +127,14 @@ namespace KSaver
             cfgSchedule.ScheduleThreeFrom = ScheduleThreeFrom.Value;
             cfgSchedule.ScheduleFourTo = ScheduleFourTo.Value;
             cfgSchedule.ScheduleFourFrom = ScheduleFourFrom.Value;
+
+            cfgSchedule.ActiveSunday = DayActiveSunday.Checked == true ? (ushort)1 : (ushort)0;
+            cfgSchedule.ActiveMonday = DayActiveMonday.Checked == true ? (ushort)1 : (ushort)0;
+            cfgSchedule.ActiveTuesday = DayActiveTuesday.Checked == true ? (ushort)1 : (ushort)0;
+            cfgSchedule.ActiveWednesday = DayActiveWednesday.Checked == true ? (ushort)1 : (ushort)0;
+            cfgSchedule.ActiveThursday = DayActiveThursday.Checked == true ? (ushort)1 : (ushort)0;
+            cfgSchedule.ActiveFriday = DayActiveFriday.Checked == true ? (ushort)1 : (ushort)0;
+            cfgSchedule.ActiveSaturday = DayActiveSaturday.Checked == true ? (ushort)1 : (ushort)0;
 
             cfgParent.UpdateValues(cfgFireRate, cfgAppEnabled, cfgPauseAfterOn, cfgPauseAfter, cfgUseSchedule, cfgSchedule);
         }
