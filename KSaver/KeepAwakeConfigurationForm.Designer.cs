@@ -56,7 +56,6 @@
             this.ScheduleOneTo = new System.Windows.Forms.DateTimePicker();
             this.ScheduleOneFrom = new System.Windows.Forms.DateTimePicker();
             this.UseSchedule = new System.Windows.Forms.CheckBox();
-            this.ApplyConfig = new System.Windows.Forms.Button();
             this.labelActiveDays = new System.Windows.Forms.Label();
             this.DayActiveSunday = new System.Windows.Forms.CheckBox();
             this.DayActiveMonday = new System.Windows.Forms.CheckBox();
@@ -65,6 +64,7 @@
             this.DayActiveThursday = new System.Windows.Forms.CheckBox();
             this.DayActiveFriday = new System.Windows.Forms.CheckBox();
             this.DayActiveSaturday = new System.Windows.Forms.CheckBox();
+            this.ApplyConfig = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.MinutesToFire)).BeginInit();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.HoursToClose)).BeginInit();
@@ -164,9 +164,9 @@
             this.PauseAfter.Location = new System.Drawing.Point(17, 136);
             this.PauseAfter.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.PauseAfter.Name = "PauseAfter";
-            this.PauseAfter.Size = new System.Drawing.Size(123, 24);
+            this.PauseAfter.Size = new System.Drawing.Size(127, 24);
             this.PauseAfter.TabIndex = 10;
-            this.PauseAfter.Text = "Run for Only";
+            this.PauseAfter.Text = "Disable After";
             this.PauseAfter.UseVisualStyleBackColor = true;
             this.PauseAfter.CheckedChanged += new System.EventHandler(this.PauseAfter_CheckedChanged);
             // 
@@ -391,24 +391,13 @@
             this.UseSchedule.Text = "Use Schedule";
             this.UseSchedule.UseVisualStyleBackColor = true;
             // 
-            // ApplyConfig
-            // 
-            this.ApplyConfig.Location = new System.Drawing.Point(503, 58);
-            this.ApplyConfig.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.ApplyConfig.Name = "ApplyConfig";
-            this.ApplyConfig.Size = new System.Drawing.Size(112, 35);
-            this.ApplyConfig.TabIndex = 9;
-            this.ApplyConfig.Text = "Apply";
-            this.ApplyConfig.UseVisualStyleBackColor = true;
-            this.ApplyConfig.Click += new System.EventHandler(this.ApplyConfig_Click);
-            // 
             // labelActiveDays
             // 
             this.labelActiveDays.AutoSize = true;
             this.labelActiveDays.Location = new System.Drawing.Point(17, 278);
             this.labelActiveDays.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labelActiveDays.Name = "labelActiveDays";
-            this.labelActiveDays.Size = new System.Drawing.Size(83, 20);
+            this.labelActiveDays.Size = new System.Drawing.Size(92, 20);
             this.labelActiveDays.TabIndex = 27;
             this.labelActiveDays.Text = "Active Days";
             // 
@@ -418,7 +407,7 @@
             this.DayActiveSunday.Location = new System.Drawing.Point(110, 276);
             this.DayActiveSunday.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.DayActiveSunday.Name = "DayActiveSunday";
-            this.DayActiveSunday.Size = new System.Drawing.Size(58, 24);
+            this.DayActiveSunday.Size = new System.Drawing.Size(64, 24);
             this.DayActiveSunday.TabIndex = 28;
             this.DayActiveSunday.Text = "Sun";
             this.DayActiveSunday.UseVisualStyleBackColor = true;
@@ -429,7 +418,7 @@
             this.DayActiveMonday.Location = new System.Drawing.Point(178, 276);
             this.DayActiveMonday.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.DayActiveMonday.Name = "DayActiveMonday";
-            this.DayActiveMonday.Size = new System.Drawing.Size(58, 24);
+            this.DayActiveMonday.Size = new System.Drawing.Size(66, 24);
             this.DayActiveMonday.TabIndex = 29;
             this.DayActiveMonday.Text = "Mon";
             this.DayActiveMonday.UseVisualStyleBackColor = true;
@@ -440,7 +429,7 @@
             this.DayActiveTuesday.Location = new System.Drawing.Point(246, 276);
             this.DayActiveTuesday.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.DayActiveTuesday.Name = "DayActiveTuesday";
-            this.DayActiveTuesday.Size = new System.Drawing.Size(58, 24);
+            this.DayActiveTuesday.Size = new System.Drawing.Size(62, 24);
             this.DayActiveTuesday.TabIndex = 30;
             this.DayActiveTuesday.Text = "Tue";
             this.DayActiveTuesday.UseVisualStyleBackColor = true;
@@ -451,7 +440,7 @@
             this.DayActiveWednesday.Location = new System.Drawing.Point(314, 276);
             this.DayActiveWednesday.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.DayActiveWednesday.Name = "DayActiveWednesday";
-            this.DayActiveWednesday.Size = new System.Drawing.Size(58, 24);
+            this.DayActiveWednesday.Size = new System.Drawing.Size(68, 24);
             this.DayActiveWednesday.TabIndex = 31;
             this.DayActiveWednesday.Text = "Wed";
             this.DayActiveWednesday.UseVisualStyleBackColor = true;
@@ -462,7 +451,7 @@
             this.DayActiveThursday.Location = new System.Drawing.Point(382, 276);
             this.DayActiveThursday.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.DayActiveThursday.Name = "DayActiveThursday";
-            this.DayActiveThursday.Size = new System.Drawing.Size(58, 24);
+            this.DayActiveThursday.Size = new System.Drawing.Size(62, 24);
             this.DayActiveThursday.TabIndex = 32;
             this.DayActiveThursday.Text = "Thu";
             this.DayActiveThursday.UseVisualStyleBackColor = true;
@@ -473,7 +462,7 @@
             this.DayActiveFriday.Location = new System.Drawing.Point(450, 276);
             this.DayActiveFriday.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.DayActiveFriday.Name = "DayActiveFriday";
-            this.DayActiveFriday.Size = new System.Drawing.Size(58, 24);
+            this.DayActiveFriday.Size = new System.Drawing.Size(53, 24);
             this.DayActiveFriday.TabIndex = 33;
             this.DayActiveFriday.Text = "Fri";
             this.DayActiveFriday.UseVisualStyleBackColor = true;
@@ -484,10 +473,21 @@
             this.DayActiveSaturday.Location = new System.Drawing.Point(518, 276);
             this.DayActiveSaturday.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.DayActiveSaturday.Name = "DayActiveSaturday";
-            this.DayActiveSaturday.Size = new System.Drawing.Size(58, 24);
+            this.DayActiveSaturday.Size = new System.Drawing.Size(60, 24);
             this.DayActiveSaturday.TabIndex = 34;
             this.DayActiveSaturday.Text = "Sat";
             this.DayActiveSaturday.UseVisualStyleBackColor = true;
+            // 
+            // ApplyConfig
+            // 
+            this.ApplyConfig.Location = new System.Drawing.Point(503, 58);
+            this.ApplyConfig.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.ApplyConfig.Name = "ApplyConfig";
+            this.ApplyConfig.Size = new System.Drawing.Size(112, 35);
+            this.ApplyConfig.TabIndex = 9;
+            this.ApplyConfig.Text = "Apply";
+            this.ApplyConfig.UseVisualStyleBackColor = true;
+            this.ApplyConfig.Click += new System.EventHandler(this.ApplyConfig_Click);
             // 
             // KeepAwakeConfigurationForm
             // 
