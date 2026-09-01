@@ -73,6 +73,22 @@ namespace KSaver
         stSchedule AppSchedule;
 
         /// <summary>
+        /// Cached original (color) tray icon loaded from resources.
+        /// Used as the base for both the active and grayscale tray icons.
+        /// </summary>
+        private Icon colorIcon;
+        /// <summary>
+        /// Cached grayscale tray icon shown when the app is not actively
+        /// keeping the system awake.
+        /// </summary>
+        private Icon grayIcon;
+        /// <summary>
+        /// Timer used to periodically refresh the tray icon so schedule
+        /// boundaries are reflected even when no keystroke is being fired.
+        /// </summary>
+        private System.Windows.Forms.Timer IconRefreshTimer;
+
+        /// <summary>
         /// KeepAwakeMainForm Constructor
         /// </summary>
         public KeepAwakeMainForm()
@@ -80,10 +96,21 @@ namespace KSaver
 
             InitializeComponent();
 
+            // Cache the original color icon from the designer-loaded tray icon.
+            colorIcon = (Icon)KTrayNotifier.Icon.Clone();
+            grayIcon = ConvertIconToGrayscale(colorIcon);
+
             ReadRegistry(ref AppFireRate, ref AppEnabled, ref AppPauseAfterOn, ref AppPauseAfter, ref AppUseSchedule, ref AppSchedule);
 
             AppSplashTimer.Interval = 3000;
             AppSplashTimer.Enabled = true;
+
+            // Refresh the tray icon periodically so schedule state changes
+            // (entering/leaving a schedule window or active day) are reflected.
+            IconRefreshTimer = new System.Windows.Forms.Timer(this.components);
+            IconRefreshTimer.Interval = 30000;
+            IconRefreshTimer.Tick += IconRefreshTimer_Tick;
+            IconRefreshTimer.Enabled = true;
 
             Initialize();
         }
@@ -121,6 +148,8 @@ namespace KSaver
             }
 
             WriteRegistry(AppFireRate, AppEnabled, AppPauseAfterOn, AppPauseAfter, AppUseSchedule, AppSchedule);
+
+            UpdateTrayIcon();
         }
 
         /// <summary>
@@ -387,7 +416,74 @@ namespace KSaver
         /// </summary>
         private void KeyStrokeTimer_Tick(object sender, EventArgs e)
         {
+            UpdateTrayIcon();
             Fire(VK_F24, 0);
+        }
+
+        /// <summary>
+        /// IconRefreshTimer_Tick
+        /// </summary>
+        private void IconRefreshTimer_Tick(object sender, EventArgs e)
+        {
+            UpdateTrayIcon();
+        }
+
+        /// <summary>
+        /// Returns true when the app is actively keeping the system awake,
+        /// i.e. enabled and either not using a schedule or currently inside
+        /// an active schedule window on an active day.
+        /// </summary>
+        private bool IsActivelyKeepingAwake()
+        {
+            if (AppEnabled != 1)
+            {
+                return false;
+            }
+
+            if (AppUseSchedule != 1)
+            {
+                return true;
+            }
+
+            return IsDayActive() && InSchedule();
+        }
+
+        /// <summary>
+        /// Updates the tray icon to reflect the current application state.
+        /// Shows the grayscale icon when not actively keeping awake, and the
+        /// original color icon otherwise.
+        /// </summary>
+        private void UpdateTrayIcon()
+        {
+            if (KTrayNotifier == null)
+            {
+                return;
+            }
+
+            KTrayNotifier.Icon = IsActivelyKeepingAwake() ? colorIcon : grayIcon;
+        }
+
+        /// <summary>
+        /// Converts an icon to a grayscale version using the standard
+        /// luminance weighting (0.299R + 0.587G + 0.114B).
+        /// </summary>
+        private Icon ConvertIconToGrayscale(Icon originalIcon)
+        {
+            Bitmap originalBitmap = originalIcon.ToBitmap();
+            Bitmap grayBitmap = new Bitmap(originalBitmap.Width, originalBitmap.Height);
+
+            for (int x = 0; x < originalBitmap.Width; x++)
+            {
+                for (int y = 0; y < originalBitmap.Height; y++)
+                {
+                    Color c = originalBitmap.GetPixel(x, y);
+                    int lum = (int)(0.299 * c.R + 0.587 * c.G + 0.114 * c.B);
+                    Color gray = Color.FromArgb(c.A, lum, lum, lum);
+                    grayBitmap.SetPixel(x, y, gray);
+                }
+            }
+
+            return Icon.FromHandle(grayBitmap.GetHicon());
         }
 
         /// <summary>
@@ -457,13 +553,12 @@ namespace KSaver
             Task.Run(() =>
             {
                 NotifyIcon trayIcon = KTrayNotifier; // Assuming KTrayNotifier is a NotifyIcon
-                Icon originalIcon = trayIcon.Icon;
-                Icon invertedIcon = SetIconToBlack(originalIcon);
+                Icon invertedIcon = SetIconToBlack(colorIcon);
                 for (int i = 0; i < 2; i++)
                 {
                     trayIcon.Icon = invertedIcon;
                     Thread.Sleep(100);
-                    trayIcon.Icon = originalIcon;
+                    trayIcon.Icon = IsActivelyKeepingAwake() ? colorIcon : grayIcon;
                     Thread.Sleep(100);
                 }
             });

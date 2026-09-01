@@ -12,7 +12,7 @@
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <GenerateResourceUsePreserializedResources>true</GenerateResourceUsePreserializedResources>
-    <ApplicationIcon>Resources\MSCoffee.ico</ApplicationIcon>
+    <ApplicationIcon>KImages\Coffee.ico</ApplicationIcon>
     <PackageIcon>espresso_svg_hi.png</PackageIcon>
   </PropertyGroup>
 
@@ -30,6 +30,10 @@
     <DefineConstants>TRACE</DefineConstants>
     <OutputPath>bin\Release\</OutputPath>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="KImages\Coffee.ico" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="System.Resources.Extensions" Version="8.0.0" />
