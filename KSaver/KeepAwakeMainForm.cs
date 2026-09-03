@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
@@ -51,6 +52,9 @@ namespace KSaver
         /// </summary>
         [DllImport("user32.dll", EntryPoint = "keybd_event", CharSet = CharSet.Auto, ExactSpelling = true)]
         private static extern void keybd_event(byte vk, byte scan, int flags, int extrainfo);
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        private static extern bool DestroyIcon(IntPtr hIcon);
 
         /// <summary>
         /// Constants
@@ -464,26 +468,31 @@ namespace KSaver
         }
 
         /// <summary>
-        /// Converts an icon to a grayscale version using the standard
-        /// luminance weighting (0.299R + 0.587G + 0.114B).
+        /// Converts an icon to a disabled-style grayscale image and returns a
+        /// detached icon instance.
         /// </summary>
         private Icon ConvertIconToGrayscale(Icon originalIcon)
         {
-            Bitmap originalBitmap = originalIcon.ToBitmap();
-            Bitmap grayBitmap = new Bitmap(originalBitmap.Width, originalBitmap.Height);
-
-            for (int x = 0; x < originalBitmap.Width; x++)
+            using (Bitmap originalBitmap = originalIcon.ToBitmap())
+            using (Bitmap grayBitmap = new Bitmap(originalBitmap.Width, originalBitmap.Height, PixelFormat.Format32bppArgb))
+            using (Graphics graphics = Graphics.FromImage(grayBitmap))
             {
-                for (int y = 0; y < originalBitmap.Height; y++)
+                graphics.Clear(Color.Transparent);
+                ControlPaint.DrawImageDisabled(graphics, originalBitmap, 0, 0, Color.Transparent);
+
+                IntPtr hIcon = grayBitmap.GetHicon();
+                try
                 {
-                    Color c = originalBitmap.GetPixel(x, y);
-                    int lum = (int)(0.299 * c.R + 0.587 * c.G + 0.114 * c.B);
-                    Color gray = Color.FromArgb(c.A, lum, lum, lum);
-                    grayBitmap.SetPixel(x, y, gray);
+                    using (Icon temporaryIcon = Icon.FromHandle(hIcon))
+                    {
+                        return (Icon)temporaryIcon.Clone();
+                    }
+                }
+                finally
+                {
+                    DestroyIcon(hIcon);
                 }
             }
-
-            return Icon.FromHandle(grayBitmap.GetHicon());
         }
 
         /// <summary>
